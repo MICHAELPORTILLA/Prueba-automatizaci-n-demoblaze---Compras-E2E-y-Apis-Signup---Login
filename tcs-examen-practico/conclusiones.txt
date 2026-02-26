@@ -1,0 +1,195 @@
+Realizado por Michael Portilla pata pruebas cargo Automatizador QA para TCS
+
+CONCLUSIONES:
+
+============================================================================================
+Ejercicio 1 E2E:
+============================================================================================
+1. Ejecución Exitosa del Flujo Completo de Compra
+100% de pruebas pasadas (1/1 escenarios exitosos)
+
+El flujo end-to-end de compra se completó sin errores, validando:
+
+- Selección de productos (HTC One M9 y Sony vaio i7)
+
+- Adición al carrito
+
+- Navegación entre categorías (Home → Laptops)
+
+- Proceso de checkout y confirmación de compra
+
+
+2. Framework de Automatización:
+
+- La Arquitectura se estructurada siguiendo el patrón Page Object Model (POM):
+
+- BasePage: Clase padre con métodos reutilizables.
+
+- StorePage: Page Object específico para la tienda.
+
+- BaseTest: Configuración centralizada de pruebas.
+
+- TestData: Data Providers para parametrización.
+
+- Separación de responsabilidades entre capas.
+
+
+3. Buenas Prácticas:
+Manejo de Esperas:
+- Timeouts configurados centralizadamente en config.properties
+- Uso correcto de WebDriverWait con ExpectedConditions
+- Esperas explícitas para elementos clave y alertas:
+
+Manejo de Alertas Robusto.
+- Implementación defensiva con try-catch para diferentes tipos de alertas.
+- Soporte para NoAlertPresentException y UnhandledAlertException
+- Garantiza que las alertas no interrumpan el flujo
+
+Evidencias Automatizadas:
+- Captura de pantalla en cada paso crítico (16 capturas en total) en ruta "./evidenciasTest"
+- Nombres de archivo con timestamp (formato HH-mm-ss).
+- Almacenamiento organizado en carpeta ./evidenciasTest
+
+
+4. Configuración Flexible
+
+Archivo config.properties permite modificar sin recompilar:
+- Navegador (chrome por defecto).
+- Modo headless
+- Timeouts (implícitos y explícitos)
+- URL base
+- Maximización de ventana
+
+WebDriverManager para gestión automática de drivers
+
+5. Manejo de Self-Healing (Healenium)
+- Integración con SelfHealingDriver para recuperación de elementos
+- Lógica especial en captureScreen() para obtener el driver delegado
+- Mayor robustez ante cambios en la UI
+
+6. Logging Detallado
+Configuración Logback con diferentes niveles:
+
+- INFO para acciones principales del flujo
+- DEBUG para código propio
+- Formato estandarizado con timestamp y nivel
+
+Cada acción queda registrada:
+- Clics realizados
+- Alertas manejadas
+- Capturas de pantalla
+- Ingreso de texto en formularios
+
+7. Tiempos de Ejecución:
+- Duración total: ~15 segundos
+- Tiempo efectivo de prueba: ~12 segundos
+- 16 capturas de pantalla generadas sin afectar rendimiento
+
+8. Manejo de Datos de Prueba
+- Uso de DataProviders para parametrización:@DataProvider(name = "datosPalceHolder") para datos de compra.
+- Datos realistas y válidos para el formulario de pago
+
+
+9. Validaciones Implícitas del Flujo
+Aunque no hay aserciones explícitas en el código, el flujo valida:
+- Navegación correcta entre páginas
+- Elementos visibles y clickeables
+- Alertas presentes cuando corresponden
+- Formulario completable
+
+10. Áreas de Mejora Identificadas:
+Agregar aserciones explícitas para validar:
+- Precios en el carrito
+- Confirmación de compra exitosa
+- Mensajes de éxito/error
+
+Manejo de excepciones más granular en lugar de InternalError genérico
+Implementar reportes (Allure/ExtentReports) para mejor visualización
+
+============================================================================================
+Ejercicio 2 Apis:
+
+- Signup: https://api.demoblaze.com/signup  
+- Login: https://api.demoblaze.com/login  
+============================================================================================
+
+1. Cobertura Completa de Pruebas de Apis
+
+Se validaron 5 escenarios críticos de la API de DemoBlaze:
+
+- Creación exitosa de usuario (@signup-success).
+
+- Intento de crear usuario existente (@signup-fail).
+
+- Login con usuario inexistente (@login-user-not-exist).
+
+- Login con contraseña incorrecta (@login-Wrong-password).
+
+- Login exitoso (@login-success).
+
+
+2. Manejo Correcto de Casos de Error:
+
+La API responde adecuadamente con mensajes de error específicos:
+
+- "User does not exist." - Usuario no encontrado.
+
+- "Wrong password." - Contraseña incorrecta.
+
+- "This user already exist." - Usuario duplicado.
+
+Todas las validaciones de mensajes de error pasaron exitosamente.
+
+
+3. Buenas Prácticas de Automatización Implementadas:
+
+- Generación dinámica de datos: Uso de función randomString() para crear usuarios únicos.
+
+- Manejo de contraseñas: Passwords en Base64 (cGFzc3dvcmQ=) para cumplir con el formato requerido.
+
+- Estructura organizada: Separación clara entre escenarios de Signup y Login usando tags
+
+
+4. Validaciones Exitosas:
+
+- Registro exitoso: Status 200 sin validación específica del response (vacio/String).
+
+- Login exitoso: Validación de que el response contiene el token de autenticación "Auth_token:".
+
+- Login con credenciales incorrectas: Validación exacta de mensajes de error en formato JSON.
+
+
+5. Rendimiento de Pruebas:
+
+- Tiempo total de ejecución: ~5.62 segundos para los 5 escenarios.
+
+- Promedio por escenario: ~1.12 segundos, lo cual es eficiente para pruebas de API.
+
+- Mayor tiempo: Primer escenario (0.67s) - posiblemente por inicialización.
+
+
+6. Resultado General:
+
+- 100% de pruebas exitosas (5/5 escenarios pasados)
+
+- 0 fallos en toda la suite de pruebas
+
+- Cobertura completa de los flows principales de autenticación de DemoBlaze
+
+
+7. Recomendaciones para Futuras Pruebas:
+
+- Agregar validaciones de schema JSON para respuestas exitosas.
+
+- Incluir pruebas de listado de productos (entrypoint adicional).
+
+- Considerar limpieza de datos después de pruebas de registro exitoso
+
+
+8. Calidad del Feature:
+
+- El archivo .feature está estructurado y documentado.
+
+- Los tags permiten ejecución selectiva por tipo de prueba
+
+- Las validaciones son cubren tanto casos happy path como casos de error.

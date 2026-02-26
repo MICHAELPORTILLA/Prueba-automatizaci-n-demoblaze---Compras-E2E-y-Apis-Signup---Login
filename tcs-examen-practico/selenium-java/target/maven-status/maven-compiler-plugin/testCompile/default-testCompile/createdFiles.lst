@@ -1,0 +1,8 @@
+com\tcs\qa\tests\Ejercicio2ApisLoginNotExist.class
+com\tcs\qa\data\TestData.class
+com\tcs\qa\base\BaseTest.class
+com\tcs\qa\tests\Ejercicio2ApisLoginSuccess.class
+com\tcs\qa\tests\Ejercicio2ApisLoginWrongPassword.class
+com\tcs\qa\tests\Ejercicio2ApisSignupSuccess.class
+com\tcs\qa\tests\Ejercicio2ApisSingupFail.class
+com\tcs\qa\tests\Ejercicio1E2ETest.class

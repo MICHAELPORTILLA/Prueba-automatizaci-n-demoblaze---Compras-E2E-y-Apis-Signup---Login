@@ -1,0 +1,4 @@
+com\tcs\qa\base\BasePage.class
+com\tcs\qa\config\ConfigReader.class
+com\tcs\qa\pages\StorePage.class
+com\tcs\qa\config\DriverManager.class
